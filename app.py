@@ -22,3 +22,6 @@ app.config['SECRET_KEY'] = 'fsoifj23423@#$sdfj#%#$)@48*(*)spwv@#$@#@2849238dfskj
 @app.route('/')
 def index():
     return render_template('index.html')
+
+if __name__ == '__main__':
+	app.run()
