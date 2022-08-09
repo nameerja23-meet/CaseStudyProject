@@ -25,7 +25,7 @@ def index():
 
 @app.route('/donate')
 def donate():
-    return render_template('donation.html')
+    return render_template('information.html')
     
 if __name__ == '__main__':
 	app.run()
