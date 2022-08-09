@@ -31,19 +31,23 @@ def information():
 def donate():
 	error=''
 	if request.method == 'POST':
-		email = request.form['email']
-		fName = request.form['fname']
-		lName = request.form['lname']
-		bDay = request.form['bDay']
-		sex = request.form['sex']
-		phone = request.form['phone']
-		bloodType = request.form['bloodType']
-		donatedBefore = request.form['donatedBefore']
-		city = request.form['city']
-		lastReaction = request.form['lastReaction']
-		user = {'email': email, 'fullName': fName, 'lastName': lName, 'birthday': bDay, 'sex': sex, 'bloodType':bloodType, 'donatedBefore': donatedBefore, 'city': city, 'phone':phone, 'lastReaction':lastReaction}
-		db.child('Donors').set(user)
-		error ='success'
-	return render_template('form.html', error = error)
+		try:
+			email = request.form['email']
+			fName = request.form['fname']
+			lName = request.form['lname']
+			bDay = request.form['bDay']
+			sex = request.form['sex']
+			phone = request.form['phone']
+			bloodType = request.form['bloodType']
+			donatedBefore = request.form['donatedBefore']
+			city = request.form['city']
+			lastReaction = request.form['lastReaction']
+			user = {'email': email, 'fullName': fName, 'lastName': lName, 'birthday': bDay, 'sex': sex, 'bloodType':bloodType, 'donatedBefore': donatedBefore, 'city': city, 'phone':phone, 'lastReaction':lastReaction}
+			db.child('Donors').push(user)
+			error ='success'
+		except:
+			return render_template('form.html')
+	return render_template('form.html')
+	
 if __name__ == '__main__':
 	app.run(debug =True)
