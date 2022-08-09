@@ -23,5 +23,9 @@ app.config['SECRET_KEY'] = 'fsoifj23423@#$sdfj#%#$)@48*(*)spwv@#$@#@2849238dfskj
 def index():
     return render_template('index.html')
 
+@app.route('/donate')
+def donate():
+    return render_template('donation.html')
+    
 if __name__ == '__main__':
 	app.run()
