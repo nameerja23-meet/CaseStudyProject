@@ -23,11 +23,13 @@ app.config['SECRET_KEY'] = 'fsoifj23423@#$sdfj#%#$)@48*(*)spwv@#$@#@2849238dfskj
 def index():
     return render_template('index.html')
 
-@app.route('/information')
+@app.route('/donate')
 def information():
     return render_template('information.html')
-    
-@app.route('/donate', methods =['GET', 'POST'])
+
+ 
+
+@app.route('/form', methods =['GET', 'POST'])
 def donate():
 	error=''
 	if request.method == 'POST':
