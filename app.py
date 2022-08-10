@@ -25,31 +25,36 @@ def index():
 
 @app.route('/donate')
 def information():
-    return render_template('information.html')
+    return render_template('donation_start.html')
 
  
 
 @app.route('/form', methods =['GET', 'POST'])
 def donate():
-	error=''
-	if request.method == 'POST':
-		try:
-			email = request.form['email']
-			fName = request.form['fname']
-			lName = request.form['lname']
-			bDay = request.form['bDay']
-			sex = request.form['sex']
-			phone = request.form['phone']
-			bloodType = request.form['bloodType']
-			donatedBefore = request.form['donatedBefore']
-			city = request.form['city']
-			lastReaction = request.form['lastReaction']
-			user = {'email': email, 'fullName': fName, 'lastName': lName, 'birthday': bDay, 'sex': sex, 'bloodType':bloodType, 'donatedBefore': donatedBefore, 'city': city, 'phone':phone, 'lastReaction':lastReaction}
-			db.child('Donors').push(user)
-			error ='success'
-		except:
-			return render_template('form.html')
-	return render_template('form.html')
+    if request.method == 'POST':
+        # try:
+        email = request.form['email']
+        fName = request.form['fname']
+        bDay = request.form['bDay']
+        sex = request.form['sex']
+        phone = request.form['phone']
+        bloodType = request.form['bloodType']
+        city = request.form['city']
+        lastReaction = request.form['lastReaction']
+        event = request.form['event']
+        user = {'email': email, 'fullName': fName, 'birthday': bDay, 'sex': sex, 'bloodType':bloodType, 'city': city, 'phone':phone, 'lastReaction':lastReaction, 'event' : event}
+        
+        i = 1
+
+        if(db.shallow().get().val() != None and 'Donors' in db.shallow().get().val()):
+            donors = db.child('Donors').shallow().get().val()
+            while (event+str(i) in donors):
+                i+=1
+
+        db.child("Donors").child(event+str(i)).set(user)
+        # except:
+        #     return render_template('donation_form.html')
+    return render_template('donation_form.html')
 	
 if __name__ == '__main__':
 	app.run(debug =True)
