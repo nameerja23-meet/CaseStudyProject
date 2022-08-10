@@ -39,7 +39,7 @@ def press():
 
 @app.route('/join_us')
 def join_us():
-    return render_template("Join_us.html")
+    return render_template("Join_Us.html")
 
 @app.route('/blog')
 def blog():
@@ -58,8 +58,8 @@ def donate():
         bloodType = request.form['bloodType']
         city = request.form['city']
         lastReaction = request.form['lastReaction']
-        event = 'P'
-        user = {'email': email, 'fullName': fName, 'birthday': bDay, 'sex': sex, 'bloodType':bloodType, 'city': city, 'phone':phone, 'lastReaction':lastReaction, 'event' : event}
+        uni = request.form['uni']
+        user = {'email': email, 'fullName': fName, 'birthday': bDay, 'sex': sex, 'bloodType':bloodType, 'city': city, 'phone':phone, 'lastReaction':lastReaction, 'uni' : uni}
         
         i = 1
 
