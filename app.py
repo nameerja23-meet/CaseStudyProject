@@ -58,7 +58,7 @@ def donate():
         bloodType = request.form['bloodType']
         city = request.form['city']
         lastReaction = request.form['lastReaction']
-        event = request.form['event']
+        event = 'P'
         user = {'email': email, 'fullName': fName, 'birthday': bDay, 'sex': sex, 'bloodType':bloodType, 'city': city, 'phone':phone, 'lastReaction':lastReaction, 'event' : event}
         
         i = 1
@@ -74,10 +74,29 @@ def donate():
         return redirect(url_for('confirm', num = event+str(i)))
     return render_template('donation_form.html')
 	
-@app.route('/signin')
-def signin():
-    return render_template('signin.html')
 
+@app.route('/adminlogin', methods = ['GET', 'POST'])
+def adminLogin():
+    if request.method =='POST':
+        email = request.form['email']
+        password = request.form['password']
+        try:
+            login_session['user'] = auth.sign_in_with_email_and_password(email,password)
+            return redirect(url_for('admin'))
+        except:
+            error = 'Authentication failed'
+            return render_template('adminlogin.html', error =error)
+    return render_template('adminlogin.html')
 
+@app.route('/admin', methods = ['GET', 'POST'])
+def admin():
+    if 'user' in login_session:
+        if login_session['user'] is not None:
+            print(login_session['user'] )
+            return render_template('admin.html')
+        else:
+            return redirect(url_for("adminLogin"))
+    else:
+        return redirect(url_for("adminLogin"))
 if __name__ == '__main__':
 	app.run(debug =True)
