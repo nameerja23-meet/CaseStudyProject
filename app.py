@@ -65,13 +65,13 @@ def donate():
 
         if(db.shallow().get().val() != None and 'Donors' in db.shallow().get().val()):
             donors = db.child('Donors').shallow().get().val()
-            while (event+str(i) in donors):
+            while (uni+str(i) in donors):
                 i+=1
 
-        db.child("Donors").child(event+str(i)).set(user)
+        db.child("Donors").child(uni+str(i)).set(user)
         # except:
         #     return render_template('donation_form.html')
-        return redirect(url_for('confirm', num = event+str(i)))
+        return redirect(url_for('confirm', num = uni+str(i)))
     return render_template('donation_form.html')
 	
 
@@ -88,12 +88,26 @@ def adminLogin():
             return render_template('adminlogin.html', error =error)
     return render_template('adminlogin.html')
 
+@app.route('/stats', methods = ['GET', 'POST'])
+def stats():
+    stats = {'TEC':0,'TAU':0,'BGU':0,'HUJ':0,'BIU':0}
+    donors = db.child('Donors').shallow().get().val()
+    for uni in ['TEC','TAU','BGU','HUJ','BIU']:
+        for i in donors:
+            if uni in i:
+                stats[uni] +=1
+    if request.method == "POST":
+        name = request.form["name"]
+        if name in db.child('Donors').shallow().get().val():
+            return render_template('admin.html', stats = stats, donor = db.child('Donor').child(name).get().val())
+    return render_template('admin.html', stats = stats)
+
+
 @app.route('/admin', methods = ['GET', 'POST'])
 def admin():
     if 'user' in login_session:
         if login_session['user'] is not None:
-            print(login_session['user'] )
-            return render_template('admin.html')
+            return redirect(url_for('stats'))
         else:
             return redirect(url_for("adminLogin"))
     else:
