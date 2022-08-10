@@ -99,7 +99,7 @@ def stats():
     if request.method == "POST":
         name = request.form["name"]
         if name in db.child('Donors').shallow().get().val():
-            return render_template('admin.html', stats = stats, donor = db.child('Donor').child(name).get().val())
+            return render_template('admin.html', stats = stats, donor = db.child('Donors').child(name).get().val())
     return render_template('admin.html', stats = stats)
 
 
