@@ -74,5 +74,10 @@ def donate():
         return redirect(url_for('confirm', num = event+str(i)))
     return render_template('donation_form.html')
 	
+@app.route('/signin')
+def signin():
+    return render_template('signin.html')
+
+
 if __name__ == '__main__':
 	app.run(debug =True)
