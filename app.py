@@ -33,6 +33,17 @@ def information():
 def confirm(num):
     return render_template('donation_num.html', num = num)
 
+@app.route('/press')
+def press():
+    return render_template("Press.html")
+
+@app.route('/join_us')
+def join_us():
+    return render_template("Join_us.html")
+
+@app.route('/blog')
+def blog():
+    return render_template("Blog.html")
 
 
 @app.route('/form', methods =['GET', 'POST'])
