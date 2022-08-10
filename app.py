@@ -29,6 +29,12 @@ def information():
 
  
 
+@app.route('/confirm/<num>')
+def confirm(num):
+    return render_template('donation_num.html', num = num)
+
+
+
 @app.route('/form', methods =['GET', 'POST'])
 def donate():
     if request.method == 'POST':
@@ -54,6 +60,7 @@ def donate():
         db.child("Donors").child(event+str(i)).set(user)
         # except:
         #     return render_template('donation_form.html')
+        return redirect(url_for('confirm', num = event+str(i)))
     return render_template('donation_form.html')
 	
 if __name__ == '__main__':
